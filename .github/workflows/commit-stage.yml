@@ -1,4 +1,4 @@
-name: Commit Stage
+name: Build and run tests with Maven
 on:
   push:
     branches: [ main ]
@@ -8,12 +8,7 @@ on:
 jobs:
   build:
     name: Build and Test
-    runs-on: ubuntu-22.04
-    permissions:
-      contents: read
-      security-events: write
-    strategy:
-      fail-fast: false
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -22,6 +17,5 @@ jobs:
         with:
           distribution: temurin
           java-version: 17
-          cache: maven
       - name: Test with Maven
         run: mvn -B clean compile test --file pom.xml
