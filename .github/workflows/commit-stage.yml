@@ -1,12 +1,13 @@
 name: Commit Stage
 on:
   push:
-  schedule: # Every Monday
-    - cron: '0 0 * * 1'
-
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+    
 jobs:
   build:
-    name: Build and Test ${{ matrix.project }}
+    name: Build and Test
     runs-on: ubuntu-22.04
     permissions:
       contents: read
@@ -21,9 +22,6 @@ jobs:
         with:
           distribution: temurin
           java-version: 17
-          cache: gradle
-      - name: Build, unit tests and integration tests
-        run: |
-          cd ${{ matrix.project }}
-          chmod +x mvnw
-          ./mvnw clean package
+          cache: maven
+      - name: Test with Maven
+        run: mvn -B clean compile test --file pom.xml
