@@ -18,11 +18,6 @@ jobs:
       matrix:
         language: [ 'java' ]
     steps:
-      - if: matrix.language == 'java'
-        name: Build Java
-        run: |
-          make bootstrap
-          make release
       - name: Checkout repository
         uses: actions/checkout@v3
       - name: Set up JDK
@@ -40,4 +35,6 @@ jobs:
         with:
           category: "/language:${{matrix.language}}"
       - name: Test with Maven
-        run: mvn -B clean compile test --file pom.xml
+        run: mvn -B clean compile test --file pom.xml |
+             make bootstrap
+             make release
