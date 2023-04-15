@@ -6,5 +6,6 @@ public class ProjectA {
 		System.out.println("Hello World! This is project a!");
 
 		System.out.println("Testing");
+		System.out.println("Project A");
 	}
 }
